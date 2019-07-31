@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Add News</title>
+        <link rel="stylesheet" href="./public/css/style.css" />
+    </head>
+    <body>
+     <header id="menu">
+
+     </header>
+     <main>
+       
+     <section id="addNews">
+       <div class="wrapper">
+          <form action="" class="form" onsubmit="return onSubmit()" method="post" enctype="multipart/form-data" id="myForm" name="myForm">
+            <fieldset>
+            <legend>Add News Item</legend>
+            <p>Author:<span id="author-error"> </span></p>
+            <input type="text" id="author"  name="author" required pattern="[A-Za-z\\s]{5,}" placeholder="Name: Min. of 5 Character">
+          
+            <p>Avatar:<span id="avatar-error"> </span></p>
+            <input type="file" id="avatar" name="avatar" required accept="image/png, image/jpeg, image/gif, image/jpg" >
+
+            <p>Title:<span id="error-title"> </span></p>
+            <input type="text" id="title"  name="title" required pattern="[A-Za-z\\s]{10,}" placeholder="Title: Min. of 10 Character">
+            <p>Url:<span id="url-error"> </span></p>
+            <input type="url" id="url"  name="url" required  placeholder="Enter Url">
+
+            <input type="submit" value="Add News" />
+            
+            </fieldset>
+          </form>
+
+       </div>
+     </section>
+     </main>
+     <script>
+   
+        function onSubmit(){
+            
+                        let invalidInput = [];
+                        let author = document.getElementById('author').value;
+                        let title = document.getElementById('title').value;
+                        let avatar = document.getElementById('avatar').files[0];
+                        let fileType = avatar.type;
+                        let url = document.getElementById('url').value;
+                        let validFile = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+                        let authorPattern = /[A-Za-z\s]{5,}/;
+                        let titlePattern = /[A-Za-z\s]{10,}/;
+                        let apiUrl = `http://5d2c2f2b8c90070014972225.mockapi.io/api/v2/news`;
+
+                        //alert(!titlePattern.test(title));
+                       
+                       //VALIDATION ....
+                         if(!validFile.includes(fileType)){
+                             let avatar_error = "Invalid Avatar Selected, allowed images are jpeg, gif & png";
+                             document.getElementById('avatar-error').innerHTML = avatar_error;
+                             invalidInput.push(avatar_error);
+                         }
+                         if(!authorPattern.test(author)){
+                            let author_error = "Invalid Name Input: Min of 5 Character";
+                             document.getElementById('author-error').innerHTML = author_error;
+                             invalidInput.push("Invalid Author input");
+                         }
+                        if(!titlePattern.test(title)){
+                            let invalid_title = "Invalid title: Min. of 10 Character";
+                            //alert(invalid_title);
+                             document.getElementById('error-title').innerHTML = invalid_title;
+                             invalidInput.push(invalid_title);
+                         }
+                       //END OF VALIDATION ...
+
+                       // TO CLEAR ERROR MESSAGE
+                       if(validFile.includes(fileType)){
+                             let avatar_error = "";
+                             document.getElementById('avatar-error').innerHTML = avatar_error;
+                         } 
+                         if(authorPattern.test(author)){
+                            let author_error = "";
+                             document.getElementById('author-error').innerHTML = author_error;
+                         } 
+                         if(titlePattern.test(title)){
+                            let title_error = "";
+                             document.getElementById('error-title').innerHTML = title_error;
+                         }
+                         // END OF CLEARING ERROR MESAGE
+
+
+                      //  alert(invalidInput.length);
+                       if(invalidInput.length != 0){
+                          return false
+                       }else{
+                        let formData = new FormData();
+                       formData.append('author', avatar);
+                       formData.append('avatar', avatar);
+                       formData.append('title', title);
+                       formData.append('url', url);
+                       let init = {
+                           method: "POST",
+                           body: formData
+                       }
+                       fetch(apiUrl, init).then(async (res) => {
+                            if(!res.ok){
+                                throw new Error('HTTP ERROR: STATUS:' + res.status);
+                            }
+                           return await res.json();
+                       }).then(async (response) => {
+                           console.log(JSON.stringify(response));
+                           return true;
+                       }).catch(error => console.log(error));
+               
+                    }//END OF ELSE STATEMENT
+    
+                 }// END OF FORM SUBMISSION
+    
+                       </script>
+
+     <footer id="footer"> &copy; copyright 2019 @ Okeke Chukwuemeka Christian </footer>
+     <script src="./public/js/layout/menu.js" type="module"></script>
+    </body>
+</html>

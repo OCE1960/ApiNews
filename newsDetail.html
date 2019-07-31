@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NEWS DETAILS</title>
+        <link rel="stylesheet" href="./public/css/style.css" />
+    </head>
+    <body>
+     <header id="menu"> </header>
+     <main>
+
+        <script>
+   
+    function onSubmit(){
+        
+                    let invalidInput = [];
+                    let name = document.getElementById('name').value;
+                    let newsId = document.getElementById('newsId').value;
+                    let avatar = document.getElementById('avatar').files[0];
+                    let fileType = avatar.type;
+                    let comment = document.getElementById('comment').value;
+                    let validFile = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+                    let namePattern = /[A-Za-z\s]{3,}/;
+                    let commentPattern = /[A-Za-z0-9_\s]{20,}/;
+                    let apiUrl = `http://5d2c2f2b8c90070014972225.mockapi.io/api/v2/news/${newsId}/comments`;
+                   
+                   //VALIDATION ....
+                     if(!validFile.includes(fileType)){
+                         let avatar_error = "Invalid Avatar Selected, allowed images are jpeg, gif & png";
+                         document.getElementById('avatar-error').innerHTML = avatar_error;
+                         invalidInput.push(avatar_error);
+                     }
+                     if(!namePattern.test(name)){
+                        let name_error = "Invalid Name Input";
+                         document.getElementById('name-error').innerHTML = name_error;
+                         invalidInput.push("Invalid Name input");
+                     }
+                     if(!commentPattern.test(comment)){
+                        let comment_error = "Invalid Comments Text, minimun of 20 character, no special character";
+                         document.getElementById('comment-error').innerHTML = comment_error;
+                         invalidInput.push(comment_error)
+                     }
+                   //END OF VALIDATION ...
+
+                   //TO CLEAR ERROR MESSAGE
+                   if(validFile.includes(fileType)){
+                         let avatar_error = "";
+                         document.getElementById('avatar-error').innerHTML = avatar_error;
+                     }
+                     if(namePattern.test(name)){
+                        let name_error = "";
+                         document.getElementById('name-error').innerHTML = name_error;
+                     }
+                     if(commentPattern.test(comment)){
+                        let comment_error = "";
+                         document.getElementById('comment-error').innerHTML = comment_error;
+                     }
+
+
+                   // END OF CLEARING ERROR MESSAGE
+                  //  alert(invalidInput.length);
+                   if(invalidInput.length != 0){
+                      return false
+                   }else{
+                    let formData = new FormData();
+                   formData.append('name', name);
+                   formData.append('newsId', +newsId);
+                   formData.append('avatar', avatar);
+                   formData.append('comment', comment);
+                   let init = {
+                       method: "POST",
+                       body: formData
+                   }
+                   fetch(apiUrl, init).then(async (res) => {
+                        if(!res.ok){
+                            throw new Error('HTTP ERROR: STATUS:' + res.status);
+                        }
+                       return await res.json();
+                   }).then(async (response) => {
+                       console.log(JSON.stringify(response));
+                       return true;
+                   }).catch(error => console.log(error));
+           
+                }//END OF ELSE STATEMENT
+
+             }// END OF FORM SUBMISSION
+ </script>
+
+<script>
+    function deleteNews(){
+                    let id = document.getElementById('id').value;
+                    let apiUrl = `http://5d2c2f2b8c90070014972225.mockapi.io/api/v2/news/${id}`;
+                   fetch(apiUrl, init).then(async (res) => {
+                        if(!res.ok){
+                            throw new Error('HTTP ERROR: STATUS:' + res.status);
+                        }
+                       return await res.json();
+                   }).then(async (response) => {
+                       console.log(JSON.stringify(response));
+                       return true;
+                   }).catch(error => console.log(error));
+             }// END OF deleteNews Function
+ </script>
+
+<script>
+    function delete_comment_on_news_item(){
+                    let id = document.getElementById('id').value;
+                    let commentId = document.getElementById('commentId').value;
+                    let apiUrl = `http://5d2c2f2b8c90070014972225.mockapi.io/api/v2/news/${id}/comments/${commentId}`;
+                   fetch(apiUrl, init).then(async (res) => {
+                        if(!res.ok){
+                            throw new Error('HTTP ERROR: STATUS:' + res.status);
+                        }
+                       return await res.json();
+                   }).then(async (response) => {
+                       console.log(JSON.stringify(response));
+                       return true;
+                   }).catch(error => console.log(error));
+             }// END OF deleteNews Function
+ </script>
+        <div id="error"> </div>
+        <section id="newsDetail"></section>
+
+     </main>
+     <footer>
+      &copy; copyright 2019 @ Okeke Chukwuemeka Christian
+
+     </footer>
+
+    <script src="./public/js/get_news_by_id.js" type="module"></script>
+    <script src="./public/js/layout/menu.js" type="module"></script>
+    </body>
+</html>

@@ -1,0 +1,168 @@
+body {
+    background-color: #DBE0E4
+}
+
+* {
+    margin: 0px;
+}
+a {
+    text-decoration: none;
+}
+nav {
+    background-color: #000036;
+    color: antiquewhite;
+    height: 50px;
+    position: relative;
+    padding-top: 20px;
+}
+
+nav li {
+    display: inline;
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+    text-align: center;
+    
+}
+
+nav li a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.brand {
+    color: aliceblue;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+footer {
+    text-align: center;
+    background-color: #000036;
+    color: antiquewhite;
+    height: 50px;
+    position: relative;
+    padding-top: 20px;
+    margin-top: 50px;
+    width: 100%;
+}
+main {
+    width: 100%;
+}
+#news {
+    position: relative;
+    display: inline-block;
+}
+
+.news img {
+    float: left;
+    padding-right: 20px;
+}
+.news, .newsDetail {
+    clear: both;
+    padding: 10px;
+    margin: 20px;
+    width: 600px;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 20px;   
+}
+
+#pagination {
+    display: block;
+    text-align: center;
+}
+
+#pagination span a {
+    padding: 10px;
+    text-decoration: none;
+}
+
+#newsDetail {
+    text-align: center;
+    margin-top: 30px;
+}
+#newsDetail img {
+    display: inline-block;
+}
+
+#newsDetail .form {
+    text-align: left;
+    width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+
+}
+
+.form textarea {
+   width: 100%;
+   height: 100px;
+   margin-bottom: 20px;
+}
+
+.form input {
+    padding: 10px;
+    margin-bottom: 20px;
+ }
+
+ .form input[type="text"], .form input[type="url"] {
+    width: 95%;
+ }
+
+ input:invalid, textarea:invalid, input[type=file]:invalid, input[type=url]:invalid {
+    border-left: 5px solid red;
+}
+
+input[type=text]:valid, textarea:valid, input[type=file]:valid, input[type=url]:valid {
+    border-left: 5px solid green;
+  }
+
+  #error {
+      text-align: center;
+      color: red;
+  }
+
+#myForm span {
+    color:red;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#addNews, #update-news-item {
+     text-align: left ;
+}
+
+#addNews > div , #update-news-item > div {
+    width: 600px;
+    margin: 0 auto;
+    height: 70vh;
+}
+
+#addNews > div form, #update-news-item > div {
+    margin-top: 10vh;
+}
+
+.update a {
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    background-color: #000036;
+    margin: 10px 0px 5px 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+ .update button {
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    background-color: red;
+    margin: 10px 0px 5px 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#delete {
+    display: inline-flex;
+}
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Edit Comment</title>
+        <link rel="stylesheet" href="./public/css/style.css" />
+    </head>
+    <body>
+     <header id="menu"> </header>
+     <main>
+
+    <section id="update-news-item"></section>
+
+    <script>
+   
+            function onSubmit(){
+                
+                            let invalidInput = [];
+                            let comment = document.getElementById('comment').value;
+                            let id = document.getElementById('id').value;
+                            let commentId = document.getElementById('commentId').value;
+                            let avatar = document.getElementById('avatar').files[0];
+                            let fileType = avatar.type;
+                            let validFile = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+                            let commentPattern = /[A-Za-z\s]{10,}/;
+                            let apiUrl = `http://5d2c2f2b8c90070014972225.mockapi.io/api/v2/news/${id}/comments/${commentId}`;
+    
+                            //alert(!titlePattern.test(title));
+                           
+                           //VALIDATION ....
+                             if(!validFile.includes(fileType)){
+                                 let avatar_error = "Invalid Avatar Selected, allowed images are jpeg, gif & png";
+                                 document.getElementById('avatar-error').innerHTML = avatar_error;
+                                 invalidInput.push(avatar_error);
+                             }
+                            if(!commentPattern.test(comment)){
+                                let invalid_comment = "Invalid Comment: Min. of 10 Character";
+                                //alert(invalid_comment);
+                                 document.getElementById('comment-error').innerHTML = invalid_comment;
+                                 invalidInput.push(invalid_comment);
+                             }
+                           //END OF VALIDATION ...
+    
+                           // TO CLEAR ERROR MESSAGE
+                           if(validFile.includes(fileType)){
+                                 let avatar_error = "";
+                                 document.getElementById('avatar-error').innerHTML = avatar_error;
+                             } 
+                             if(commentPattern.test(comment)){
+                                let comment_error = "";
+                                 document.getElementById('error-title').innerHTML = comment_error;
+                             }
+                             // END OF CLEARING ERROR MESAGE
+    
+    
+                          //  alert(invalidInput.length);
+                           if(invalidInput.length != 0){
+                              return false
+                           }else{
+                            let formData = new FormData();
+                           formData.append('id', id);
+                           formData.append('comments', commentId);
+                           formData.append('avatar', avatar);
+                           formData.append('comment', comment);
+                           let init = {
+                               method: "PUT",
+                               body: formData
+                           }
+                           fetch(apiUrl, init).then(async (res) => {
+                                if(!res.ok){
+                                    throw new Error('HTTP ERROR: STATUS:' + res.status);
+                                }
+                               return await res.json();
+                           }).then(async (response) => {
+                            window.location.replace("index.html");
+                               return true;
+                           }).catch(error => console.log(error));
+                   
+                        }//END OF ELSE STATEMENT
+        
+                     }// END OF FORM SUBMISSION
+        
+                           </script>
+    
+
+     </main>
+     <footer>
+      &copy; copyright 2019 @ Okeke Chukwuemeka Christian
+
+     </footer>
+
+    <script src="./public/js/edit_comment_on_a_new.js" type="module"></script>
+    <script src="./public/js/layout/menu.js" type="module"></script>
+    </body>
+</html>
